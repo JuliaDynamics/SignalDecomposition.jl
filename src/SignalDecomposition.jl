@@ -2,6 +2,7 @@ module SignalDecomposition
 
 export decompose, Decomposition
 
+"Abstract type of all decomposition methods."
 abstract type Decomposition end
 
 """
