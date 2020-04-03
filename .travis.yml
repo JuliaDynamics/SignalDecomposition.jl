@@ -18,6 +18,8 @@ matrix:
     - julia: nightly
   fast_finish: true
   include:
+    - os: linux
+      julia: 1.0
     - stage: "Documentation"
       julia: 1
       os: linux
