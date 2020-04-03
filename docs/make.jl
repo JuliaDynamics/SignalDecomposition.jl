@@ -38,7 +38,7 @@ pages = [
 
 if CI
     deploydocs(
-        repo = "github.com/JuliaDynamics/DrWatson.jl.git",
+        repo = "github.com/JuliaDynamics/SignalDecomposition.jl.git",
         target = "build",
         push_preview = true
     )

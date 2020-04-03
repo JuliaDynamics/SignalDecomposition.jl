@@ -1,14 +1,16 @@
+# SignalDecomposition.jl
+
 ```@contents
 Depth = 3
 ```
 
-# Overview
+## Overview
 SignalDecomposition.jl offers a single function:
 ```@docs
 decompose
 ```
 
-# Methods
+## Methods
 
 ```@autodocs
 Modules = [SignalDecomposition]
