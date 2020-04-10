@@ -6,7 +6,7 @@ using LsqFit
 Fit sinuisoidals with given frequencies `fs` to the signal `s` in [`decompose`](@ref)
 using the package `LsqFit`. Specifically, fit
 ```math
-s - \\bar{s} \\approx \\sum_i A_i (\\sin(2\\pi f_i t) + \\phi_i)
+s - \\bar{s} \\approx \\sum_i A_i \\sin(2\\pi f_i t + \\phi_i)
 ```
 with ``\\bar{s}`` the mean. The fit happens on the amplitudes
 and phases ``A_i, \\phi_i``. After the `decomposition` you can find these in the struct's

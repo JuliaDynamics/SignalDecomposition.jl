@@ -23,3 +23,37 @@ function findnearest(val::Real, A::AbstractVector{<:Real})
     end
     return i
 end
+
+
+export nrmse, rmse
+function mse(x, y)
+    m = length(x)
+    @assert m == length(y)
+    @inbounds mse = sum(abs2(x[i] - y[i]) for i in 1:m) / m
+    return mse
+end
+
+using Statistics: mean
+
+"""
+    rmse(x, y) → e
+Return the root mean square error `e` of the "fit" `y` into data `x`.
+"""
+rmse(x, y) = sqrt(mse(x, y))
+
+"""
+    nrmse(x, y) → e
+Return the normalized root mean square error of the "fit" `y` into data `x`.
+This number is the relative error of `y` to `x` versus `mean(x)` to `x`, i.e.
+if `e < 1` the fit `y` is better than using `mean(x)` as a fit.
+"""
+function nrmse(x, y)
+    m = length(x)
+    mean_out = mean(x)
+    _mse     = mse(x, y)
+    @inbounds msemean = sum(abs2(x[i] - mean_out) for i in 1:m) / m
+    nrmse   = sqrt(_mse / msemean)
+    return nrmse
+end
+
+export nrmse, rmse
