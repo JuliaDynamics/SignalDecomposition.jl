@@ -15,7 +15,7 @@ decompose
 ```
 
 ## Methods
-
+Some of the following methods are linear and you could of course get more control of the process by directly using [DSP.jl](https://github.com/JuliaDSP/DSP.jl/) (but then you won't be using the quite convenient `decompose` interface).
 ```@autodocs
 Modules = [SignalDecomposition]
 Order   = [:type]

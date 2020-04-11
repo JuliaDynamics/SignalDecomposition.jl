@@ -1,5 +1,5 @@
 export SinusoidalFit
-using LsqFit
+import LsqFit
 
 """
     SinusoidalFit(s, fs) <: Decomposition

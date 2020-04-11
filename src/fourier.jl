@@ -1,5 +1,5 @@
 using FFTW
-export Fourier
+export Fourier, FrequencySplit
 
 # TODO: Allow width to the removed frequencies, ie. remove
 # a Gaussian around the specified frequency
@@ -50,6 +50,39 @@ function decompose(t, s, method::Fourier)
         i = findnearest(f, fs)
         𝓕[i] = 0.0
     end
+    inv_𝓕 = isnothing(method.inverse) ? irfft(𝓕, length(s)) : method.inverse*𝓕
+    residual = inv_𝓕
+    periodic = s .- residual
+    return periodic, residual
+end
+
+
+"""
+    FrequencySplit([s, ] f::Real) <: Decomposition
+Similar to the [`Fourier`](@ref) method, but now the "residual" signal is the part
+of `s` with frequencies higher than `f`, while the "seasonal" part has frequencies `≤ f`.
+"""
+struct FrequencySplit{F, I} <: Decomposition
+    f::Float64
+    forward::F
+    inverse::I
+end
+FrequencySplit(fs) = FrequencySplit(fs, nothing, nothing)
+function FrequencySplit(s, fs)
+    forward = plan_rfft(s)
+    inverse = plan_irfft(forward*s, length(s))
+    return FrequencySplit(fs, forward, inverse)
+end
+
+function decompose(t, s, method::FrequencySplit)
+    isequispaced(t) || error("Input time axis must be equispaced for method FrequencySplit.")
+
+    m = mean(s)
+    𝓕 = isnothing(method.forward) ? rfft(s .- m) : method.forward*(s .- m)
+    fs = rfftfreq(length(s))
+    i = findlast(f -> f ≤ method.f, fs)
+    @show i
+    𝓕[1:i+1] .= 0.0
     inv_𝓕 = isnothing(method.inverse) ? irfft(𝓕, length(s)) : method.inverse*𝓕
     residual = inv_𝓕
     periodic = s .- residual
