@@ -26,4 +26,5 @@ Simple utility functions to check how well the decomposition is for your data:
 ```@docs
 rmse
 nrmse
+σrmse
 ```

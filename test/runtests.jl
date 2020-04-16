@@ -1,12 +1,11 @@
-using SignalDecomposition
 cd(@__DIR__)
+using SignalDecomposition
 using DelimitedFiles, Test, Random
-Random.seed!(14141)
 
 lorenzx = vec(readdlm("lorenzx.txt"))
 roeslerz = vec(readdlm("roeslerz.txt"))
 
-noise = randn(length(lorenzx))
+noise = randn(Random.MersenneTwister(12441), length(lorenzx))
 residuals = (lorenzx, roeslerz, noise)
 resnames = ("lorenz", "roessler", "gaussian")
 

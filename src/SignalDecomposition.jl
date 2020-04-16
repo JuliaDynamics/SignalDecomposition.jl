@@ -7,22 +7,22 @@ abstract type Decomposition end
 
 """
     decompose([t, ] s, method::Decomposition) → x, r
-Decompose an 1D input signal or timeseries `s(t)` into two components,
-the structure `x` and noise `r`. Depending on your application, "structure" could be
-a seasonal/periodic uninteresting component, and "noise" a residual interesting component.
-The decomposition is done via dispatch on the `method` (see the methods for more).
+Decompose an 1D input signal or timeseries `s(t)` into two components, `x, r`,
+using the given `method`. `t` (the axis of `s`) defaults to `1:length(s)`.
 
-Most of the time `x` also includes the mean value of `s`.
+What are `x` and `r` really depend on your point of view and your application.
+They can be structure `x` and noise `r` (i.e. noise reduction). They can be
+seasonal/periodic `x` and residual component `r`. They can even be multiplier `x` and
+input `r`.
 """
 decompose(s::AbstractVector, method::Decomposition; kwargs...) =
 decompose(1:length(s), s, method; kwargs...)
 
 using Statistics
 include("utils.jl")
-include("fourier.jl")
-include("sinuisoidal.jl")
-include("deconvolution.jl")
-include("ssa.jl")
-include("delay.jl")
+include("linear/fourier.jl")
+include("linear/sinuisoidal.jl")
+include("product/matrixinversion.jl")
+# include("nonlinear/projection.jl")
 
 end # module
