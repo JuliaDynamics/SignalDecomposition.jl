@@ -56,4 +56,10 @@ function nrmse(x, y)
     return nrmse
 end
 
-export nrmse, rmse
+"""
+    σrmse(x, y) = rmse(x, y)/std(x)
+Relative error of the fit `y` to data `x` with respect to `std(x)`. 
+"""
+σrmse(x, y) = rmse(x, y)/std(x)
+
+export nrmse, rmse, σrmse
