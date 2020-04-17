@@ -83,7 +83,6 @@ function decompose(t, s, method::FrequencySplit)
     𝓕 = isnothing(method.forward) ? rfft(s .- m) : method.forward*(s .- m)
     fs = rfftfreq(length(s))
     i = findlast(f -> f ≤ method.f, fs)
-    @show i
     𝓕[1:i+1] .= 0.0
     inv_𝓕 = isnothing(method.inverse) ? irfft(𝓕, length(s)) : method.inverse*𝓕
     residual = inv_𝓕
