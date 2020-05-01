@@ -24,8 +24,6 @@ This method works if the given signal has length multiple of the largest period 
 **Important**: periods/frequencies are defined with respect to the time axis length,
 the actual time axis `t` is not used in this method. So, frequency `1/12` (a period of `12`)
 means `12` time points (whose actual time value depends on `t`).
-
-TODO: Actually use time axis and make the above notice obsolete.
 """
 struct Fourier{F, I} <: Decomposition
     fs::Vector{Float64}

@@ -4,55 +4,89 @@
 
 # https://journals.aps.org/pre/abstract/10.1103/PhysRevE.53.R4326
 # and references therein
-using NearestNeighbors
+
+# Algorithm "IV" of paper "On noise reduction methods for chaotic data".
+# Further used in the following two refs:...
+
+using Neighborhood
 using DelayEmbeddings
 using LinearAlgebra # for eigenvalues
+using StaticArrays
+
+# TODO: add @inbounds everywhere once it is done
 
 # inputs
 s = lorenzx + 0.1randn(length(lorenzx))
-m = 40
+m = 20
 w = 1 # theiler window
-metric = NearestNeighbors.Euclidean()
-ntype = 50 # neighborhood type
+metric = Euclidean()
 r = 1000.0 # r is large says the paper. "penaltizing factor"
-Q = m÷2 # the difference of `m` to 2 times the capacity dimension of the chaotic set
-# underlying the dynamics of input timeseries
+searchtype = NeighborNumber(30)
+Q = 4 # the difference of `m` to 2 times the capacity dimension of the chaotic set
+# Q is "the dimension of the local manifold projected on"
+# So Q is the dimension of the expected manifold dimension of the attractor of the
+# noiseless timeseries
 
 # start algorithm
 @assert Q < m
-x = s # the paper uses the symbol `y` for the input timeseries
-X = embed(x, m+1, 1) # capital y is paper's bold y
-tree = KDTree(Y.data, metric)
-R = ones(eltype(y), m+1)
+V = embed(s, m+1, 1) # embedded space, which is "bold x" in paper
+Vcorrected = deepcopy(V)
+x = s # paper uses x throughout, simpler this way
+noiseless = copy(s)
+
+# Initialize a bunch of stuff
+tree = searchstructure(KDTree, V.data, metric)
+R = ones(eltype(s), m+1)
 R[1] = R[end] = r # something "large"
-Γ = C = zeros(eltype(η), m+1, m+1) # notice: C and Γ are the same entity
-𝒟 = zeros(eltype(x), Q, Q)
-ξ = zeros(eltype(x), m+1)
+Γ = C = zeros(eltype(s), m+1, m+1)
+𝒟 = copy(C)
+ # notice: C and Γ are the same entity, only for clarity of source I use 2 symbols
+ξ = zeros(eltype(s), m+1)
+θ = zeros(eltype(s), m+1) # correction vector
 
-# notice: the paper uses backwards embedding, but in DelayEmbeddings we traditionally
-# use forward embedding by default. Thus e.g. equations (1) and (2) change a little
-# but we are doing the same operations in the end.
+𝒰 = bulkisearch(tree, V.data, searchtype, Theiler(w)) # all neighbors for all points
 
-for n in 1:length(y) # start process for every point in the embedded space
+for n in 1:length(V) # start process for every point in the embedded space
+    𝒰n = 𝒰[n]
+    K = length(𝒰n)
 
-𝒰n = knn(tree, X[n], neighborhood)
-K = length(𝒰n)
+    for i in 0:m; ξ[i+1] = (1/K)*sum(x[k+i] for k in 𝒰n); end
 
-for i in 0:m; ξ[i+1] = (1/K)*sum(x[k+i] for k in 𝒰n); end
+    for j in 1:m+1, i in 1:m+1
+        C[i, j] = @fastmath (1/K)*sum(x[k+i]*x[k+j] - ξ[i]*ξ[j] for k in 𝒰n)
+        Γ[i, j] = @fastmath R[i]*C[i, j]*R[j] # make Γ
+    end
+    eig = eigvecs(Γ) # these are sorted by eigenvalue. Important for the algorithm.
+    for j in 1:m+1, i in 1:m+1
+        𝒟[i, j] = sum(eig[i, q]*eig[j, q] for q in 1:Q)
+    end
 
-for j in 1:m+1, i in 1:m+1
-    C[i, j] = @fastmath (1/K)*sum(x[k+i]*x[k+j] - ξ[i]*ξ[j] for k in 𝒰n)
-    Γ[i, j] = @fastmath R[i]*C[i, j]*R[j] # make Γ
+    # corrections vectors:
+    θ = @SVector [
+        (1/R[i]) * sum(𝒟[i, j] * R[j] * (ξ[j] - x[n+j-1]) for j in 1:m+1)
+        for i in 1:m+1
+    ]
+
+    Vcorrected.data[n] = V.data[n] + θ
 end
-eig = eigenvec(Γ) # these are sorted by eigenvalue
-for j in 1:m+1, i in 1:m+1
-    𝒟[i, j] = sum(eig[i, q]*eig[j, q] for q in 1:Q)
+
+# The paper states that "every point in the timeseries" participates in "exactly"
+# m+1 delay vectors. It is TERRIBLE that something so wrong can be said so casually.
+# This is of course false, the start and end of the timeseries do not satisfy this
+
+okay, now use corrected points to estimate new points, by taking the average.
+
+
+for n in (m+1):length(V)-m
+    noiseless[n] = 1/(m+1)*sum(Vcorrected[n+j, j+1] for j in 0:m)
 end
 
-# corrections vectors:
-for i in 1:m+1
-    θ[n][i] = (1/R[i]) * sum(𝒟[i, j] * R[j] * (ξ[j] - x[n+j-1]) for j in 1:m+1)
+# Edge cases
+for n in 1:m
+    noiseless[n] = 1/(n)*sum(Vcorrected[n+j-1, j] for j in 1:n)
+end
+for (z, n) in enumerate((length(V)-m):-1:(length(V)-2m))
+    noiseless[n] = 1/(z)*sum(Vcorrected[n-j, m+1-j] for j in 0:(z-1))
 end
 
-
-# TODO: add @inbounds everywhere once it is done
+# return noiseless, x .- noiseless

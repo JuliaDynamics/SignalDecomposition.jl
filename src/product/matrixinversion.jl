@@ -2,7 +2,7 @@ using BandedMatrices, LinearAlgebra
 export ProductInversion
 
 """
-    ProductInversion(r, μ; verbose=true) <: Decomposition
+    ProductInversion(r, μ; verbose=false) <: Decomposition
 Decompose a timeseries `s` into a **product** `x * r`, given that you have a good
 estimate of the second factor `r` (the "input") and you need `x` (the "multiplier")
 but you can't do simply `x =  s ./ r` because `r` contains zeros.
@@ -29,7 +29,7 @@ struct ProductInversion{R, M} <: Decomposition
     xdummy::R
     verbose::Bool
 end
-ProductInversion(r, μ; verbose=true) = ProductInversion(r, μ, copy(r), copy(r), verbose)
+ProductInversion(r, μ; verbose=false) = ProductInversion(r, μ, copy(r), copy(r), verbose)
 
 # TODO: performant method `update!(method, s, μ)`
 

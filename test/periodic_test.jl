@@ -4,7 +4,7 @@ mthods = (m1, m2)
 
 for m in mthods
     # println("Method: "string(nameof(typeof(m)))))
-    for (name, re) in zip(("lorenz", "roessler", "gaussian"), (lorenzx, roeslerz, noise))
+    for (name, re) in zip(("lorenz", "roessler", "gaussian"), (lorenzx, roesslerz, noise))
         s = periodic .+ re
         x, r = decompose(s, m)
         errper = nrmse(periodic, x)

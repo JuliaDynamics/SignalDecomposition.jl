@@ -1,8 +1,8 @@
 peri_with_zero = copy(periodic)
 peri_with_zero[periodic .≤ 0] .= 0
 
-ro_with_zero = copy(10roeslerz)
-ro_with_zero[10roeslerz .≤ 0.1] .= 0
+ro_with_zero = copy(10roesslerz)
+ro_with_zero[10roesslerz .≤ 0.1] .= 0
 
 for j in 1000:2000:9000
     ro_with_zero[j:1:j+200] .= 0
@@ -25,7 +25,7 @@ cases = [
         fullerr = nrmse(s, x .* r)
         @test fullerr < 0.1
         println("  case $i errper=$errper, errres=$errres ")
-
+        # 
         # figure()
         # ax1 = subplot(311)
         # title(string(nameof(typeof(m)))*" case $i")
