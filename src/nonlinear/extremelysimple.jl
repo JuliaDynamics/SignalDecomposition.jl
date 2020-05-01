@@ -8,16 +8,19 @@ an average of nearest neigbhors in the embedded space
 =#
 using Neighborhood
 using DelayEmbeddings
+export ExtremelySimpleNL
 
 """
     ExtremelySimpleNL(k::Int, ℓ::Int, w::Int, τ::Int, ε::Real) <: Decomposition
 Quite literally the "extremely simple nonlinear noise-reduction method"[^Schreiber1993].
-It estimates the noiseless timeseries by the average position of neighbors in the
-delay embedded space. This method works well if your timeseries is composed by the
-addition of a structured component (which follows deterministic and
-stationary dynamics) and some noise.
+It decomposes `s` into the **sum** `x + r` with `x` being the "noiseless" timeseries.
+This is the average position of neighbors in the delay embedded space.
 
-The cited paper has a lot of info on choosing optimal `ε`.
+This method works well if your timeseries is composed by the
+addition of a structured component (which follows deterministic and
+stationary dynamics which the embedding should approximate) and some noise.
+
+The cited paper has some info on choosing optimal `ε`.
 
 Arguments:
 * `k` amount of past delay
@@ -37,13 +40,13 @@ struct ExtremelySimpleNL <: Decomposition
 end
 
 function decompose(t, s, method::ExtremelySimpleNL)
-    k, ℓ, w, τ, ε = getproperty.(method, (:k, :ℓ, :w, :τ :ε))
+    k, ℓ, w, τ, ε = getproperty.(Ref(method), (:k, :ℓ, :w, :τ, :ε))
     delays = [i*τ for i in -k:1:ℓ]
     embedding = GeneralizedEmbedding(Tuple(delays))
     X = genembed(s, Tuple(delays))
     tree = searchstructure(KDTree, X.data, Chebyshev())
     c = copy(s) # corrected timeseries
-    theiler = Theiler(w) # hehe, τrange is not necessary to be used here!
+    theiler = Theiler(w)
 
     vec_of_idxs = bulkisearch(tree, X.data, WithinRange(ε), theiler)
     zerocount = 0
