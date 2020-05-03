@@ -1,4 +1,4 @@
-using SignalDecomposition, Random, PyPlot, Statistics
+using SignalDecomposition, Random, Statistics
 m = Sinusoidal([1, 2])
 Random.seed!(151512)
 tu = cumsum(rand(L)/4) # non-equispaced timeaxis

@@ -1,4 +1,4 @@
-using LPVSpectral, Statistics, PyPlot, Random
+using LPVSpectral, Statistics, Random
 export Sinusoidal
 
 """
@@ -14,13 +14,12 @@ There is arbitrarity of which part of the signal `x, r`
 gets the mean value (we just attribute it to `x`).
 
 This method uses a new least-squares algorithm in frequency domain using the package
-[LPVSpectral.jl](https://github.com/baggepinnen/LPVSpectral.jl), see[^Bagge2018] (Ch. 10)
-for more details on the algorithm.
+[LPVSpectral.jl](https://github.com/baggepinnen/LPVSpectral.jl), see[^Bagge2017].
 
 This method works for non-equispaced `t` axis (and also normal) and is only
 2x slower than [`Fourier`](@ref) while not having the limiatations of `Fourier`.
 
-[^Bagge2018]: Bagge Carlson, Fredrik, [PhD Thesis 2018, Lund University](https://lup.lub.lu.se/search/ws/files/55399444/phdthesis.pdf).
+[^Bagge2018]: F. Bagge Carlson et al., [Linear Parameter-Varying Spectral Decomposition](https://lup.lub.lu.se/search/publication/ac32368e-e199-44ff-b76a-36668ac7d595), 2017.
 """
 struct Sinusoidal{F}
     fs::F
