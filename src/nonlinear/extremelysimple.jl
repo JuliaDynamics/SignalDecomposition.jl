@@ -49,18 +49,17 @@ function decompose(t, s, method::ExtremelySimpleNL)
     theiler = Theiler(w)
 
     vec_of_idxs = bulkisearch(tree, X.data, WithinRange(ε), theiler)
-    zerocount = 0
+    zc = 0
 
     for (i, n) in enumerate(τrange(s, embedding))
         𝒰n = vec_of_idxs[i]
         K = length(𝒰n)
         if K == 0
-            zerocount += 1
+            zc += 1
             continue
         end
         c[n] = (1/K) * sum(s[j+k] for j in 𝒰n)
     end
-    zerocount > 0 && @warn "$(zerocount) points were not corrected because no neighbors where found. "*
-                           " Increasing `ε` will improve that."
+    zc > 0 && @warn "$(zc) points were not corrected because no neighbors where found."
     return c, s .- c
 end

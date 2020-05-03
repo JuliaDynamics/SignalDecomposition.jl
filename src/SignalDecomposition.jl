@@ -22,6 +22,7 @@ using Statistics
 include("utils.jl")
 include("linear/fourier.jl")
 include("linear/sinuisoidal.jl")
+include("linear/lpv.jl")
 include("product/matrixinversion.jl")
 include("nonlinear/extremelysimple.jl")
 # include("nonlinear/projection.jl")

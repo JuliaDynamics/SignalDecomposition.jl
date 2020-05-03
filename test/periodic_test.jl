@@ -1,12 +1,15 @@
-m1 = Fourier(1 ./ tperiods)
+m1 = Fourier(periodic, 1 ./ tperiods)
 m2 = FrequencySplit(maximum(1 ./ tperiods))
-mthods = (m1, m2)
+m3 = Sinusoidal([1, 2])
+mthods = (m1, m2, m3)
 
 for m in mthods
-    # println("Method: "string(nameof(typeof(m)))))
+    mstring = string(nameof(typeof(m)))
+    @testset "Standard periodic, $mstring" begin
     for (name, re) in zip(("lorenz", "roessler", "gaussian"), (lorenzx, roesslerz, noise))
         s = periodic .+ re
-        x, r = decompose(s, m)
+        t = m isa Sinusoidal ? te : (1:length(s))
+        x, r = decompose(t, s, m)
         errper = nrmse(periodic, x)
         @test errper < 0.1
         errres = nrmse(re, r)
@@ -23,5 +26,6 @@ for m in mthods
         # plot(re; alpha = 0.75, label = "original")
         # plot(r; alpha = 0.75, ls = "dashed", label = "err=errres")
         # ylabel("r"); legend()
+    end
     end
 end
