@@ -1,8 +1,6 @@
 cd(@__DIR__)
 using SignalDecomposition
 using DelimitedFiles, Test, Random, Statistics
-
-# %% Generate timeseries
 using DynamicalSystemsBase
 
 ds = Systems.lorenz()
@@ -16,15 +14,21 @@ ds = Systems.roessler()
 tr = trajectory(ds, 500.0, dt = 0.05, Ttr = 10)
 roesslerz = tr[:, 3]/std(tr[:, 3])
 
-noise = randn(Random.MersenneTwister(12441), length(lorenzx))
+L = length(lorenzx)
+
+noise = randn(Random.MersenneTwister(12441), L)
 
 # trivial periodic component:
-t = range(0, 24π, length = length(lorenzx))
-periodic = @. 4 + 7.2cos(t) + 5.6cos(2t + 3π/5)
-twopiidx = findfirst(x -> x  ≥ 2π, t)
+te = range(0, 24π, length = length(lorenzx))
+periodicf(t) = @. 4 + 7.2cos(t) + 5.6cos(2t + 3π/5)
+periodic = periodicf(te)
+twopiidx = findfirst(x -> x  ≥ 2π, te)
 tperiods = [twopiidx, twopiidx/2]
+
+# t = cumsum(rand(1000)/2)
 
 # %% Run tests
 include("periodic_test.jl")
+include("lpv_test.jl")
 include("product_test.jl")
 include("nonlinear_test.jl")
