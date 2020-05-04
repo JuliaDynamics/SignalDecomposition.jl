@@ -1,5 +1,5 @@
 using SignalDecomposition, Random, Statistics
-m = Sinusoidal([1, 2])
+m = Sinusoidal([1, 2] ./ 2π)
 Random.seed!(151512)
 tu = cumsum(rand(L)/4) # non-equispaced timeaxis
 pu = periodicf(tu)
@@ -28,7 +28,7 @@ end
 
 @testset "Sinusoidal-3" begin
     s = pu .+ cos.(3tu) .+ noise
-    x, r = decompose(tu, s, Sinusoidal([1, 2, 3]))
+    x, r = decompose(tu, s, Sinusoidal([1, 2, 3]./2π))
     errper = nrmse(pu .+ cos.(3tu), x)
     @test errper < 0.1
     errres = nrmse(noise, r)

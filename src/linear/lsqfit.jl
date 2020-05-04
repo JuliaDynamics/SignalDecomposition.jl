@@ -38,8 +38,6 @@ mutable struct SinusoidalFit{T<:AbstractFloat} <: Decomposition
     phases::Vector{T}
 end
 
-# TODO: write a function that analyses `s` and provides better estimates for φ0, Α0.
-
 function SinusoidalFit(s::AbstractVector{T}, fs) where {T}
     φ0s = zero(fs)
     A0s = fill(abs(-(extrema(s)...))/2, length(fs))
