@@ -1,6 +1,6 @@
 m1 = Fourier(periodic, 1 ./ tperiods)
 m2 = FrequencySplit(maximum(1 ./ tperiods))
-m3 = Sinusoidal([1, 2])
+m3 = Sinusoidal([1, 2] ./ 2π)
 mthods = (m1, m2, m3)
 
 for m in mthods
