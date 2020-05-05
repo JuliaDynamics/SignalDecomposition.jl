@@ -14,7 +14,7 @@ Here "linear" means linear in frequency space. For most methods you could of cou
 ```@docs
 Fourier
 FrequencySplit
-SinusoidalFit
+Sinusoidal
 ```
 
 ## Nonlinear methods

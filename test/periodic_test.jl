@@ -14,6 +14,10 @@ for m in mthods
         @test errper < 0.1
         errres = nrmse(re, r)
         @test nrmse(r, re) < 0.5
+
+        errori = nrmse(s, x .+ r)
+        @test errori < 1e-15
+
         # println("  "*name*" errper=$errper, reserr=$reserr ")
 
         # figure()
