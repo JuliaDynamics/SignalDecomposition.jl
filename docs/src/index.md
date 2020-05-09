@@ -22,11 +22,17 @@ Sinusoidal
 ## Nonlinear methods
 ```@docs
 ExtremelySimpleNL
+ManifoldProjection
 ```
 
 ## Product methods
 ```@docs
 ProductInversion
+```
+
+## Miscellaneous methods
+```@docs
+TimeAnomaly
 ```
 
 ## Utilities
