@@ -11,7 +11,6 @@ LPVSpectral = "26dcc766-85df-5edc-b560-6076d5dbac63"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Neighborhood = "645ca80c-8b79-4109-87ea-e1f58159d116"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
@@ -20,7 +19,6 @@ DelayEmbeddings = "1.5"
 FFTW = "1.2"
 LPVSpectral = "0.3"
 Neighborhood = "0.1"
-StaticArrays = "0.12"
 julia = "1.4"
 
 [extras]

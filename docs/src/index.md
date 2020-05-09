@@ -22,7 +22,6 @@ Sinusoidal
 ## Nonlinear methods
 ```@docs
 ExtremelySimpleNL
-ManifoldProjection
 ```
 
 ## Product methods
