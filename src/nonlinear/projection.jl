@@ -3,19 +3,22 @@ using DelayEmbeddings
 using LinearAlgebra # for eigenvalues
 using StaticArrays
 
+export ManifoldProjection
+
 # TODO: Would be nice to be able to generalize this to have `τ` as delay time
 # instead of forcing `τ=1`.
 
-# s = lorenzx + 0.1noise
-m = 5
-w = 0 # theiler window
-metric = Euclidean()
-r = 1000.0 # r is large says the paper. "penaltizing factor"
-searchtype = NeighborNumber(30)
-Q = 2 # the difference of `m` to 2 times the capacity dimension of the chaotic set is Q
-# Q is "the dimension of the local manifold projected on"
-# So Q is the dimension of the expected manifold dimension of the attractor of the
-# noiseless timeseries
+"""
+    ManifoldProjection(m, Q, k, τ=1, w=0, r=1000.0) <: Decomposition
+A nonlinear noise reduction method, also known as "locally linear projections", which
+works by bringing a noisy signal closer to a multi-dimensional manifold that represents
+the deterministic dynamics of the signal. The method is method "IV" of [^Grassberger1993].
+
+`m::Int` is the same as in [^Grassberger1993], the embedding dimension - 1. `Q` is related with the
+*expected* dimension `d` of the manifold of the deterministic dynamics, with `d = m-Q+1`.
+If given a `Vector{Int}` as `Q` the algorithm will iteratively do noise reduction
+to the resulting outputs (thus a vector is strongly recommended).
+Duplicate entries can exist in `Q`.
 
 `k` can be either `Int` or a `SearchType` from [Neighborhood.jl](https://julianeighbors.github.io/Neighborhood.jl/stable/#Search-types-1).
 If `Int`, the `k` nearest neighbors are choosen as the neighborhood 𝓤 of each point.
@@ -37,7 +40,7 @@ See also [^Schreiber1996] for an application of the same algorithm in real ECG d
 struct ManifoldProjection{ST <: SearchType} <: Decomposition
     m::Int
     Qs::Vector{Int}
-    searchtype::ST
+    st::ST
     w::Int
     r::Float64
 end
@@ -57,7 +60,6 @@ function SignalDecomposition.decompose(t, s, method::ManifoldProjection)
     return x, s .- x
 end
 
-# TODO: Replace all 0:m and 1:m+1 with 1:D ?
 # TODO: add inbounds everywhere
 
 function iteratively_project!(x, method, ge::GeneralizedEmbedding{D}) where {D}
@@ -116,8 +118,3 @@ function iteratively_project!(x, method, ge::GeneralizedEmbedding{D}) where {D}
         x .= r # set corrected vector to input vector.
     end
 end
-
-# return noiseless, x .- noiseless
-scatter(s[1:end-1], s[2:end], s = 1)
-scatter(Vcorrected[1:end-1, 1], Vcorrected[2:end, 2], s = 1)
-scatter(noiseless[1:end-1], noiseless[2:end], s = 1)
