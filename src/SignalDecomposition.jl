@@ -24,6 +24,6 @@ include("linear/fourier.jl")
 include("linear/lpv.jl")
 include("product/matrixinversion.jl")
 include("nonlinear/extremelysimple.jl")
-# include("nonlinear/projection.jl")
+include("nonlinear/projection.jl")
 
 end # module
