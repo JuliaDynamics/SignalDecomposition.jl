@@ -25,5 +25,7 @@ include("linear/lpv.jl")
 include("product/matrixinversion.jl")
 include("nonlinear/extremelysimple.jl")
 include("nonlinear/projection.jl")
+include("misc/anomaly.jl")
+
 
 end # module
