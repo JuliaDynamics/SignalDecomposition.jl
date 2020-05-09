@@ -20,20 +20,22 @@ decompose(t, s, method::TimeAnomaly) = error("`t` must be `<:AbstractVector{<:Ti
 function decompose(t::AbstractVector{<:TimeType}, s, method::TimeAnomaly)
     @assert length(t) == length(s)
     udates = unique!(sort!(daymonth.(t)))
-    counters = Dict(u => [0, zero(eltype(s))] for u in udates)
+    c = Dict(u => 0 for u in udates)
+    v = Dict(u => zero(eltype(s)) for u in udates)
     x = copy(s)
     # First run: calculate climatology averages
     @inbounds for i in 1:length(t)
         date = daymonth(t[i])
-        counters[date] .+= (1, s[i])
+        c[date] += 1
+        v[date] += s[i]
     end
     # Second run: make x
-    for (key, val) in counters
-        @inbounds val[2] = val[2]/val[1] # take the average
+    for (key, n) in c
+        @inbounds v[key] = v[key]/n # take the average
     end
     @inbounds for i in 1:length(t)
         date = daymonth(t[i])
-        x[i] = counters[date][2]
+        x[i] = v[date]
     end
     return x, s .- x
 end
