@@ -3,6 +3,8 @@ using DelayEmbeddings
 using LinearAlgebra # for eigenvalues
 using StaticArrays
 
+export ManifoldProjection
+
 # TODO: Would be nice to be able to generalize this to have `τ` as delay time
 # instead of forcing `τ=1`.
 
@@ -38,7 +40,7 @@ See also [^Schreiber1996] for an application of the same algorithm in real ECG d
 struct ManifoldProjection{ST <: SearchType} <: Decomposition
     m::Int
     Qs::Vector{Int}
-    searchtype::ST
+    st::ST
     w::Int
     r::Float64
 end
@@ -58,7 +60,6 @@ function SignalDecomposition.decompose(t, s, method::ManifoldProjection)
     return x, s .- x
 end
 
-# TODO: Replace all 0:m and 1:m+1 with 1:D ?
 # TODO: add inbounds everywhere
 
 function iteratively_project!(x, method, ge::GeneralizedEmbedding{D}) where {D}
