@@ -20,8 +20,6 @@ he = Systems.henon()
 tr = trajectory(he, 10000; Ttr = 100)
 s = tr[:, 1] .+ randn(10001)/15
 
-scatter(s[1:end-1], s[2:end], s = 1)
-
 # s = lorenzx + 0.1noise
 m = 5
 w = 0 # theiler window
@@ -98,4 +96,6 @@ for (z, n) in enumerate((length(V)-m):-1:(length(V)-2m))
 end
 
 # return noiseless, x .- noiseless
+scatter(s[1:end-1], s[2:end], s = 1)
+scatter(Vcorrected[1:end-1, 1], Vcorrected[2:end, 2], s = 1)
 scatter(noiseless[1:end-1], noiseless[2:end], s = 1)

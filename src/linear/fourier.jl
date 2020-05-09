@@ -7,7 +7,7 @@ export Fourier, FrequencySplit
 # DSP.Filters.Bandstop and probably some windowing function from DSP.
 
 """
-    Fourier([s, ] frequencies) <: Decomposition
+    Fourier([s, ] frequencies, x=true) <: Decomposition
 Decompose a timeseries `s` into a **sum** `x + r`, by identifying specific `frequencies`
 at the Fourier space and removing them from the signal.
 `x` is the removed periodic component while `r` is the residual.
@@ -26,18 +26,20 @@ and you have a good educated guess of what frequencies compose P.
 This method works well if the given signal has length multiple of the periods given.
 
 There is arbitrarity of which part of the signal `x, r`
-gets the mean value (we just attribute it to `x`).
+gets the mean value of `s`, because it is deducted for a better fit.
+The argument `x=true` attributes it to `x`, use `false` for `r`.
 """
 struct Fourier{F, I} <: Decomposition
     fs::Vector{Float64}
     forward::F
     inverse::I
+    x::Bool
 end
-Fourier(fs) = Fourier(fs, nothing, nothing)
-function Fourier(s, fs)
+Fourier(fs, x::Bool=true) = Fourier(fs, nothing, nothing, x)
+function Fourier(s::AbstractVector, fs::AbstractVector, x::Bool=true)
     forward = plan_rfft(s)
     inverse = plan_irfft(forward*s, length(s))
-    return Fourier(fs, forward, inverse)
+    return Fourier(fs, forward, inverse, x)
 end
 
 function decompose(t, s, method::Fourier)
@@ -56,6 +58,10 @@ function decompose(t, s, method::Fourier)
     inv_𝓕 = isnothing(method.inverse) ? irfft(𝓕, length(s)) : method.inverse*𝓕
     residual = inv_𝓕
     periodic = s .- residual
+    if !method.x
+        periodic .-= m
+        residual .+= m
+    end
     return periodic, residual
 end
 
