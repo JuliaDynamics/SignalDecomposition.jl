@@ -8,7 +8,7 @@ abstract type Decomposition end
 """
     decompose([t, ] s, method::Decomposition) → x, r
 Decompose an 1D input signal or timeseries `s(t)` into components, `x, r`,
-using the given `method`. `t` (the axis of `s`) defaults to `1:length(s)`.
+using the given `method`. `t` defaults to `1:length(s)`.
 
 What are `x` and `r` really depend on your point of view and your application.
 They can be structure `x` and noise `r` (i.e. noise reduction). They can be
