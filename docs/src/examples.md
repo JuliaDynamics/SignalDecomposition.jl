@@ -2,8 +2,8 @@
 Only a few examples are shown here. Every method has an example (and plotting code) in the `test` folder!
 
 ## Nonlinear
-```@example
-using SignalDecomposition, DynamicalSystems, Random, Plots
+```@example docs
+using SignalDecomposition, DynamicalSystems, Random, Plots, Statistics
 
 he = Systems.henon()
 tr = trajectory(he, 10000; Ttr = 100)
@@ -18,7 +18,7 @@ Q = [2, 2, 2, 3, 3, 3, 3]
 x, r = decompose(s, ManifoldProjection(m, Q, k))
 ```
 
-```@example
+```@example docs
 p1 = plot(s, label = "input")
 plot!(p1, z, color = :black, ls = :dash, label = "real")
 plot!(p1, x, alpha = 0.5, label = "output")
@@ -29,7 +29,7 @@ p1
 Alright, this doesn't seem much of a difference to be honest.
 One sees a big difference once going into the state space and looking at the attractor:
 
-```@example
+```@example docs
 p2 = scatter(s[1:end-1], s[2:end], ms = 1, label = "input", msw = 0)
 scatter!(p2, z[1:end-1], z[2:end], ms = 1, label = "real", color = :black, msw = 0)
 scatter!(p2, x[1:end-1], x[2:end], ms = 1, label = "output", alpha = 0.5, msw = 0)
@@ -37,7 +37,7 @@ p2
 ```
 
 ## Time and Sinusoidal
-```@example
+```@example docs
 using SignalDecomposition, Dates, Random, Plots
 Random.seed!(41516)
 y = Date(2001):Day(1):Date(2025)
@@ -57,10 +57,10 @@ plot!(p3, t, cy, label = "true periodic", color = :black, ls = :dash)
 plot!(p3, t, x, label = "TimeAnomaly", alpha = 1.0, color = :red)
 plot!(p3, t, x2, label = "Sinusoidal", alpha = 0.5, color = :green)
 xlabel!(p3, "years")
-xlims!(p3, 0, 1) # zoom very much in
+xlims!(p3, 0, 1) # zoom in
 ```
 
 Allthough not immediatelly obvious from the figure, `Sinusoidal` performs better:
-```@example
+```@example docs
 rmse(cy, x), rmse(cy, x2)
 ```
