@@ -31,7 +31,8 @@ end
         he = Systems.henon()
         tr = trajectory(he, 10000; Ttr = 100)
         Random.seed!(151521)
-        s = tr[:, 1] .+ randn(10001)*0.1*std(tr[:, 1])
+        z = tr[:, 1]
+        s = z .+ randn(10001)*0.1*std(z)
         # s = lorenzx + 0.1noise
         m = 5
         w = 1 # theiler window
@@ -44,18 +45,17 @@ end
 
         err = nrmse(x, tr[:, 1])
         @test err < 0.1
-        #
-        # figure()
-        # scatter(s[1:end-1], s[2:end], s = 0.1, label = "input")
-        # z = tr[:, 1]
-        # scatter(z[1:end-1], z[2:end], s = 0.1, label = "real", color = "k")
-        # scatter(x[1:end-1], x[2:end], s = 0.1, label = "output", alpha = 0.5)
-        # legend()
-        #
+
         # figure()
         # plot(s, label = "input")
         # plot(z, color = "k", ls = "dashed", label = "real")
         # plot(x, alpha = 0.5, label = "output")
+
+        # figure()
+        # scatter(s[1:end-1], s[2:end], s = 0.1, label = "input")
+        # scatter(z[1:end-1], z[2:end], s = 0.1, label = "real", color = "k")
+        # scatter(x[1:end-1], x[2:end], s = 0.1, label = "output", alpha = 0.5)
+        # legend()
     end
 
     @testset "lorenz" begin

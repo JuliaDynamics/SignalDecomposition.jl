@@ -2,8 +2,11 @@ using Pkg
 Pkg.activate(@__DIR__)
 CI = get(ENV, "CI", nothing) == "true" || get(ENV, "GITHUB_TOKEN", nothing) !== nothing
 CI && Pkg.instantiate()
+CI && (ENV["GKSwstype"] = "100")
+
 using SignalDecomposition, Documenter, DocumenterTools
 using DocumenterTools: Themes
+using Plots
 
 # %%
 # download the themes
