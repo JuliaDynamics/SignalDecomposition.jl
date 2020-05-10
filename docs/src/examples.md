@@ -16,6 +16,7 @@ metric = Euclidean()
 k = 30
 Q = [2, 2, 2, 3, 3, 3, 3]
 x, r = decompose(s, ManifoldProjection(m, Q, k))
+summary(x)
 ```
 
 ```@example docs
@@ -64,3 +65,4 @@ Allthough not immediatelly obvious from the figure, `Sinusoidal` performs better
 ```@example docs
 rmse(cy, x), rmse(cy, x2)
 ```
+Furthermore, by construction, the `x` component of `Sinusoidal` will always be a smooth function (sum of cosines). `TimeAnomaly` will typically retain some noise.
