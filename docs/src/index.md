@@ -1,5 +1,7 @@
 # SignalDecomposition.jl
 
+![SignalDecomposition.jl](https://github.com/JuliaDynamics/JuliaDynamics/blob/master/videos/other/signaldecomposition.gif?raw=true)
+
 `SignalDecomposition` is a simple Julia package that offers a single function:
 ```@docs
 decompose
