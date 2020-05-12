@@ -34,8 +34,9 @@ One sees a big difference once going into the state space and looking at the att
 p2 = scatter(s[1:end-1], s[2:end], ms = 1, label = "input", msw = 0)
 scatter!(p2, z[1:end-1], z[2:end], ms = 1, label = "real", color = :black, msw = 0)
 scatter!(p2, x[1:end-1], x[2:end], ms = 1, label = "output", alpha = 0.5, msw = 0)
-p2
+savefig(p2, "henon.png") # hide
 ```
+![](henon.png)
 
 ## Time and Sinusoidal
 ```@example docs
