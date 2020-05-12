@@ -20,7 +20,7 @@ O(N^2.4) instead of O(n log(n)) of [`Fourier`](@ref).
 Because it can work with arbitrary signal length the method always estimates the
 zero-frequency Fourier component, and attributes it to `x`.
 The fitted coefficients ``A, \\phi`` are available as fields `.A` and `.φ` of the struct
-(first entry is zero-frequency component, i.e. the mean with respect to the sinusoidals).
+(first entry is zero-frequency component ``A_0, \\phi_0``).
 
 [^Bagge2017]: F. Bagge Carlson et al., [Linear Parameter-Varying Spectral Decomposition](https://lup.lub.lu.se/search/publication/ac32368e-e199-44ff-b76a-36668ac7d595).
 """

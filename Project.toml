@@ -1,7 +1,7 @@
 name = "SignalDecomposition"
 uuid = "11a47235-7b84-4c7c-b885-fc3e2a9cf955"
 authors = ["Datseris <datseris.george@gmail.com>"]
-version = "0.1.0"
+version = "1.0.0"
 
 [deps]
 BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
