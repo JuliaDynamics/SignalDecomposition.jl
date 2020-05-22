@@ -35,7 +35,7 @@ format = Documenter.HTML(
         ],
     ),
 pages = [
-    "Introduction" => "index.md",
+    "Documentation" => "index.md",
     "Examples" => "examples.md",
     ],
 )

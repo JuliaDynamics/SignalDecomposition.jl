@@ -2,6 +2,7 @@
 
 ---
 
+## API
 `SignalDecomposition` is a simple Julia package that offers a single function:
 ```@docs
 decompose
