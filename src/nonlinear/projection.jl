@@ -15,8 +15,11 @@ A nonlinear noise reduction method, also known as "locally linear projections", 
 works by bringing a noisy signal closer to a multi-dimensional manifold that represents
 the deterministic dynamics of the signal. The method is method "IV" of [^Grassberger1993].
 
-`m::Int` is the same as in [^Grassberger1993], the embedding dimension - 1. `Q` is related with the
-*expected* dimension `d` of the manifold of the deterministic dynamics, with `d = m-Q+1`.
+`m::Int` is the same as in [^Grassberger1993], the embedding dimension.
+`Q` is related with the *expected* dimension `d` of the manifold of the deterministic
+with approximate relation `d ≈ m-Q+1`. However, it is best t consider `Q` as an input
+parameter (the dimension of the set you project locally into) and you need to vary
+it to achieve the best performance.
 If given a `Vector{Int}` as `Q` the algorithm will iteratively do noise reduction
 to the resulting outputs (thus a vector is strongly recommended).
 Duplicate entries can exist in `Q`.
