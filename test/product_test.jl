@@ -24,7 +24,7 @@ cases = [
         errres = nrmse(case[2], r) # by definition 0
         fullerr = nrmse(s, x .* r)
         @test fullerr < 0.1
-        # println("  case $i errper=$errper, errres=$errres ")
+        println("  case $i errper=$errper, errres=$errres ")
         #
         # figure()
         # ax1 = subplot(311)

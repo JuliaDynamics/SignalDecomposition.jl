@@ -11,7 +11,6 @@ Random.seed!(151521)
 z = tr[:, 1]
 s = z .+ randn(10001)*0.1*std(z)
 m = 5
-w = 1 # theiler window
 metric = Euclidean()
 k = 30
 Q = [2, 2, 2, 3, 3, 3, 3]
@@ -67,3 +66,28 @@ Allthough not immediatelly obvious from the figure, `Sinusoidal` performs better
 rmse(cy, x), rmse(cy, x2)
 ```
 Furthermore, by construction, the `x` component of `Sinusoidal` will always be a smooth function (sum of cosines). `TimeAnomaly` will typically retain some noise.
+
+## Product
+```@example docs
+using SignalDecomposition, DynamicalSystems, Plots
+
+ds = Systems.lorenz()
+tr = trajectory(ds, 20; dt = 0.002, Ttr = 100)
+lorenzx_slow = tr[:, 1]/std(tr[:, 1])
+
+ds = Systems.roessler()
+tr = trajectory(ds, 500.0, dt = 0.05, Ttr = 10)
+roesslerz = tr[:, 3]/std(tr[:, 3])
+roesslerz[roesslerz .≤ 0.1] .= 0
+
+s = lorenzx_slow .* roesslerz
+m = ProductInversion(roesslerz, 0.1:0.1:10)
+x, r = decompose(s, m)
+
+l = (4, 1)
+p5 = plot(s, label = "input s")
+plot!(p5, x .* r, label = "decomposed")
+p6 = plot(lorenzx_slow, label = "original r")
+plot!(p6, x, label = "decomposed r")
+plot(p5, p6, layout=(2,1))
+```
