@@ -61,7 +61,7 @@ xlabel!(p3, "years")
 xlims!(p3, 0, 1) # zoom in
 ```
 
-Allthough not immediatelly obvious from the figure, `Sinusoidal` performs better:
+Although not immediately obvious from the figure, `Sinusoidal` performs better:
 ```@example docs
 rmse(cy, x), rmse(cy, x2)
 ```
