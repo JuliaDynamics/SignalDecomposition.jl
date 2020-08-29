@@ -1,7 +1,7 @@
 name = "SignalDecomposition"
 uuid = "11a47235-7b84-4c7c-b885-fc3e2a9cf955"
 authors = ["Datseris <datseris.george@gmail.com>"]
-version = "1.0.0"
+version = "1.0.1"
 
 [deps]
 BandedMatrices = "aae01518-5342-5314-be14-df237901396f"
@@ -20,7 +20,7 @@ BandedMatrices = "0.15"
 DelayEmbeddings = "1.5"
 FFTW = "1.2"
 LPVSpectral = "0.3"
-Neighborhood = "0.1"
+Neighborhood = "0.1, 0.2"
 StaticArrays = "0.12"
 julia = "1.4"
 
