@@ -37,7 +37,7 @@ savefig(p2, "henon.png") # hide
 ```
 ![](henon.png)
 
-## Time and Sinusoidal
+## TimeAnomaly and Sinusoidal
 ```@example docs
 using SignalDecomposition, Dates, Random, Plots
 Random.seed!(41516)
