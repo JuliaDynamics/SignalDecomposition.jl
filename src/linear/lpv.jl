@@ -9,7 +9,7 @@ coefficients ``A, \\phi`` of the expression
 ```math
 s \\approx A_0 + \\sum_i A_i \\cos(2\\pi f_i t + \\phi_i)
 ```
-with ``\\bar{s}`` the mean.
+with ``A_0 = \\bar{s}`` the mean.
 
 This method uses a new least-squares algorithm in frequency domain using the package
 [LPVSpectral.jl](https://github.com/baggepinnen/LPVSpectral.jl), see[^Bagge2017].
