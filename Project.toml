@@ -22,6 +22,7 @@ FFTW = "1.2"
 LPVSpectral = "0.3"
 Neighborhood = "0.2"
 StaticArrays = "1"
+Statistics = "1"
 julia = "1.9"
 
 [extras]
