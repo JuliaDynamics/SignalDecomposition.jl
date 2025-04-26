@@ -7,6 +7,7 @@ abstract type Decomposition end
 
 """
     decompose([t, ] s, method::Decomposition) → x, r
+
 Decompose an 1D input signal or timeseries `s(t)` into components, `x, r`,
 using the given `method`. `t` defaults to `1:length(s)`.
 

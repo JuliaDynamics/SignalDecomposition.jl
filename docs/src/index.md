@@ -3,6 +3,7 @@
 ---
 
 ## API
+
 `SignalDecomposition` is a simple Julia package that offers a single function:
 ```@docs
 decompose
@@ -12,7 +13,8 @@ Feel free to add more methods to `decompose` by opening a PR,
 SignalDecomposition.jl is very open in the methods it offers.
 
 ## Linear methods
-Here "linear" means linear in frequency space. For some methods you could of course get more control of the process by directly using [DSP.jl](https://github.com/JuliaDSP/DSP.jl/).    
+
+Here "linear" means linear in frequency space. For some methods you could of course get more control of the process by directly using [DSP.jl](https://github.com/JuliaDSP/DSP.jl/).
 ```@docs
 Fourier
 FrequencySplit
@@ -23,6 +25,19 @@ Sinusoidal
 ```@docs
 ExtremelySimpleNL
 ManifoldProjection
+```
+
+## Detrending methods
+
+```@docs
+```
+
+## Smoothing (or detrending) methods
+
+These methods can be either smoothing or detrending depending on how large
+the smoothing window is taken!
+
+```@docs
 ```
 
 ## Product methods
