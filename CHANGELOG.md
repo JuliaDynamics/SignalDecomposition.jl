@@ -2,4 +2,6 @@
 
 # v1.2
 
-Detrending!
+- Add new functionality for the package: detrending
+- Add new functionality for the package: smoothing
+- Add new `Decompositions`: `PolynomialDetrending, NoDecomposition, MovingAverageSmoothing`.

@@ -1,28 +1,30 @@
+export PolynomialDetrending, LinearDetrending
 import Polynomials
 
 """
-    PolyNomialDetrending(degree::Int = 2)
+    PolyNnmialDetrending(degree::Int = 1) <: Decomposition
 
 Decompose timeseries `s` into a **sum** `x + r` where `x` is the trend
-and `r` the residual, utilizing a polynomial guaranteed to have given `degree`.
+and `r` the residual. The trend is a fitted polynomial guaranteed to have given `degree`.
 For `degree = 1` this is linear detrending (ordinary least squares).
 """
-@kwdef struct PonynomialDetrending <: Decomposition
+@kwdef struct PolynomialDetrending <: Decomposition
     degree::Int = 1
 end
 
-function decompose(t, s, method::PonynomialDetrending)
+function decompose(t, s, method::PolynomialDetrending)
     p = Polynomials.fit(t, s, method.degree)
     trend = p.(t)
     return trend, trend .- s
 end
 
-@kwdef struct MovingAverage
-    window
-end
+"""
+    NoDecomposition <: Decomposition
 
+Decompose timeseries `s` into `s` and zeros.
+"""
 struct NoDecomposition <: Decomposition end
 
 function decompose(t, s, ::NoDecomposition)
-    return s, similar(s)
+    return s, zeros(eltype(s), length(s))
 end
