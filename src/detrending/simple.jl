@@ -1,8 +1,8 @@
-export PolynomialDetrending, LinearDetrending
+export PolynomialDetrending
 import Polynomials
 
 """
-    PolyNnmialDetrending(degree::Int = 1) <: Decomposition
+    PolynomialDetrending(degree::Int = 1) <: Decomposition
 
 Decompose timeseries `s` into a **sum** `x + r` where `x` is the trend
 and `r` the residual. The trend is a fitted polynomial guaranteed to have given `degree`.

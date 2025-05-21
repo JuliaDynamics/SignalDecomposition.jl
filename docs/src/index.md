@@ -32,14 +32,16 @@ ManifoldProjection
 ## Detrending methods
 
 ```@docs
+PolynomialDetrending
 ```
 
 ## Smoothing (or detrending) methods
 
-These methods can be either smoothing or detrending depending on how large
-the smoothing window is taken!
+These methods can be either smoothing or detrending depending on your context!
 
 ```@docs
+MovingAverageSmoothing
+LoessSmoothing
 ```
 
 ## Product methods
