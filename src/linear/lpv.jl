@@ -3,6 +3,7 @@ export Sinusoidal
 
 """
     Sinusoidal(fs)
+
 Decompose a timeseries `s` into a **sum** `x + r`, where `x`
 are sinusoidal components with the given frequencies `fs` that minimize
 coefficients ``A, \\phi`` of the expression

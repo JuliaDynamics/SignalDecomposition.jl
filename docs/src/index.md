@@ -4,13 +4,13 @@
 
 ## API
 
-`SignalDecomposition` is a simple Julia package that offers a single function:
 ```@docs
 decompose
 ```
+
 Subtypes of `Decomposition` are listed in the rest of this page.
 Feel free to add more methods to `decompose` by opening a PR,
-SignalDecomposition.jl is very open in the methods it offers.
+SignalDecomposition.jl is very open in the methods it offers!
 
 ## Linear methods
 
