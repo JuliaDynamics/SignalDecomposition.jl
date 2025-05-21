@@ -1,3 +1,5 @@
+# Documentation
+
 ![SignalDecomposition.jl](https://github.com/JuliaDynamics/JuliaDynamics/blob/master/videos/other/signaldecomposition.gif?raw=true)
 
 ---

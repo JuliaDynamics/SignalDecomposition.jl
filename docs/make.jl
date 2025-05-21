@@ -13,3 +13,8 @@ Downloads.download(
     joinpath(@__DIR__, "build_docs_with_style.jl")
 )
 include("build_docs_with_style.jl")
+
+build_docs_with_style(pages, Attractors;
+    authors = "George Datseris <datseris.george@gmail.com>",
+    expandfirst = ["index.md"], #  this is the first script that loads colorscheme
+)
