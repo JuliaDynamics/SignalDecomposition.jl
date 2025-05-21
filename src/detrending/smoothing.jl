@@ -3,7 +3,10 @@ export MovingAverageSmoothing
 """
     MovingAverageSmoothing(window::Int = 10) <: Decomposition
 
-TODO.
+Decompose timeseries `s` into a **sum** `x + r` where `x` is the smoothened singla
+and `r` the residual. The smoothing is done via a basic moving average using a fixed
+rectangualr window of size `window`.
+At the end and start of teh timeseries only half of the window can be used for averaging.
 """
 @kwdef struct MovingAverageSmoothing
     window::Int = 10

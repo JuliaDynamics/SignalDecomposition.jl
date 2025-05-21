@@ -22,6 +22,8 @@ end
     NoDecomposition <: Decomposition
 
 Decompose timeseries `s` into `s` and zeros.
+Dummy method provided simply so that one can loop over various decomposition
+methods and no decomposition at all while still using the `decompose` function.
 """
 struct NoDecomposition <: Decomposition end
 
