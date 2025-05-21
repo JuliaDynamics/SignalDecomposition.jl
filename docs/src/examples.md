@@ -3,7 +3,7 @@ Only a few examples are shown here. Every method has an example (and plotting co
 
 ## Nonlinear
 ```@example docs
-using SignalDecomposition, DynamicalSystems, Random, Plots, Statistics
+using SignalDecomposition, DynamicalSystemsBase, Random, Statistics
 
 he = Systems.henon()
 tr = trajectory(he, 10000; Ttr = 100)
@@ -11,26 +11,16 @@ Random.seed!(151521)
 z = tr[:, 1]
 s = z .+ randn(10001)*0.1*std(z)
 m = 5
-metric = Euclidean()
 k = 30
 Q = [2, 2, 2, 3, 3, 3, 3]
 x, r = decompose(s, ManifoldProjection(m, Q, k))
 summary(x)
 ```
 
-```@example docs
-p1 = plot(s, label = "input")
-plot!(p1, z, color = :black, ls = :dash, label = "real")
-plot!(p1, x, alpha = 0.5, label = "output")
-xlims!(p1, 0, 50)
-p1
-```
-
-Alright, this doesn't seem much of a difference to be honest.
-One sees a big difference once going into the state space and looking at the attractor:
+This method is nicely highlighted once going into the state space and looking at the attractor:
 
 ```@example docs
-p2 = scatter(s[1:end-1], s[2:end], ms = 1, label = "input", msw = 0)
+fig, ax = scatter(s[1:end-1], s[2:end]; markersize = 1, label = "input", msw = 0)
 scatter!(p2, z[1:end-1], z[2:end], ms = 1, label = "real", color = :black, msw = 0)
 scatter!(p2, x[1:end-1], x[2:end], ms = 1, label = "output", alpha = 0.5, msw = 0)
 savefig(p2, "henon.png") # hide
