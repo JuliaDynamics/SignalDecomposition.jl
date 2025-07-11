@@ -1,7 +1,7 @@
 cd(@__DIR__)
 using SignalDecomposition
 using DelimitedFiles, Test, Random, Statistics
-using DynamicalSystemsBase
+using PredefinedDynamicalSystems
 
 ds = Systems.lorenz()
 tr = trajectory(ds, 500.0; dt = 0.05, Ttr = 100)

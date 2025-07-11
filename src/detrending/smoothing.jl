@@ -1,4 +1,5 @@
 export MovingAverageSmoothing, LoessSmoothing
+import Loess
 
 """
     MovingAverageSmoothing(window::Int = 10) <: Decomposition
@@ -8,7 +9,7 @@ and `r` the residual. The smoothing is done via a basic moving average using a f
 rectangualr window of size `window`.
 At the end and start of teh timeseries only half of the window can be used for averaging.
 """
-@kwdef struct MovingAverageSmoothing
+@kwdef struct MovingAverageSmoothing <: Decomposition
     window::Int = 10
 end
 
@@ -25,10 +26,6 @@ function decompose(t, s, mas::MovingAverageSmoothing)
     return smooth, s .- smooth
 end
 
-import Loess
-
-
-
 """
     LoessSmoothing(; span, degree, cell) <: Decomposition
 
@@ -42,18 +39,14 @@ and `r` the residual. The smoothing is done via locally estimated scatterplot sm
 - `cell`: Control parameter for bucket size. Internal interpolation nodes will be
 added to the K-D tree until the number of bucket element is below `n * cell * span`.
 """
-@kwdef struct LoessSmoothing{S, C}
+@kwdef struct LoessSmoothing{S, C} <: Decomposition
     span::S = 0.75
     degree::Int = 2
     cell::C = 0.2
 end
 
-function detrend_loess(y, s = 0.2)
-    n = length(y)
-    x = 1:n
-    model = loess(x, y, span = s)
-    trend = predict(model, x)
-    detrend = y .- trend
-    mse = sum((y .- trend).^2) / n
-    return detrend
+function decompose(t, s, method::LoessSmoothing)
+    model = Loess.loess(t, s, span = method.span)
+    trend = Loess.predict(model, t)
+    return trend, s .- trend
 end

@@ -1,4 +1,4 @@
-export PolynomialDetrending
+export PolynomialDetrending, NoDecomposition
 import Polynomials
 
 """

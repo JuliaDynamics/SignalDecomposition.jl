@@ -3,7 +3,7 @@ Only a few examples are shown here. Every method has an example (and plotting co
 
 ## Nonlinear
 ```@example docs
-using SignalDecomposition, DynamicalSystemsBase, Random, Statistics
+using SignalDecomposition, PredefinedDynamicalSystems, Random, Statistics
 
 he = Systems.henon()
 tr = trajectory(he, 10000; Ttr = 100)
@@ -59,7 +59,7 @@ Furthermore, by construction, the `x` component of `Sinusoidal` will always be a
 
 ## Product
 ```@example docs
-using SignalDecomposition, DynamicalSystems, Plots
+using SignalDecomposition, PredefinedDynamicalSystems, Plots
 
 ds = Systems.lorenz()
 tr = trajectory(ds, 20; dt = 0.002, Ttr = 100)
