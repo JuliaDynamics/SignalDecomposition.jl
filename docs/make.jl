@@ -14,7 +14,7 @@ Downloads.download(
 )
 include("build_docs_with_style.jl")
 
-build_docs_with_style(pages, Attractors;
+build_docs_with_style(pages, SignalDecomposition;
     authors = "George Datseris <datseris.george@gmail.com>",
     expandfirst = ["index.md"], #  this is the first script that loads colorscheme
 )
