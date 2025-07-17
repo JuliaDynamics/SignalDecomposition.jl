@@ -38,15 +38,17 @@ and `r` the residual. The smoothing is done via locally estimated scatterplot sm
 - `degree`: Polynomial degree.
 - `cell`: Control parameter for bucket size. Internal interpolation nodes will be
 added to the K-D tree until the number of bucket element is below `n * cell * span`.
+- `normalize`: Normalize the scale of each predicitor. (default true when `m > 1`)
 """
 @kwdef struct LoessSmoothing{S, C} <: Decomposition
     span::S = 0.75
     degree::Int = 2
     cell::C = 0.2
+    normalize::Bool = true
 end
 
 function decompose(t, s, method::LoessSmoothing)
-    model = Loess.loess(t, s, span = method.span)
+    model = Loess.loess(t, s; span = method.span, normalize = method.normalize, degree = method.degree, cell = method.cell)
     trend = Loess.predict(model, t)
     return trend, s .- trend
 end
