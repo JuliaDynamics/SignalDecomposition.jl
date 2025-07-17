@@ -30,11 +30,3 @@ SparseArrays = "1.11"
 StaticArrays = "1"
 Statistics = "1"
 julia = "1.9"
-
-[extras]
-DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-PredefinedDynamicalSystems = "31e2f376-db9e-427a-b76e-a14f56347a14"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
-
-[targets]
-test = ["Test", "DelimitedFiles", "PredefinedDynamicalSystems"]

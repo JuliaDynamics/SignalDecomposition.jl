@@ -6,3 +6,6 @@ PredefinedDynamicalSystems = "31e2f376-db9e-427a-b76e-a14f56347a14"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 SignalDecomposition = "11a47235-7b84-4c7c-b885-fc3e2a9cf955"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+
+[compat]
+PredefinedDynamicalSystems = "1.4"
