@@ -24,6 +24,7 @@ Sinusoidal
 ```
 
 ## Nonlinear methods
+
 ```@docs
 ExtremelySimpleNL
 ManifoldProjection
@@ -42,19 +43,23 @@ These methods can be either smoothing or detrending depending on your context!
 ```@docs
 MovingAverageSmoothing
 LoessSmoothing
+HodrickPrescott
 ```
 
 ## Product methods
+
 ```@docs
 ProductInversion
 ```
 
 ## Miscellaneous methods
+
 ```@docs
 TimeAnomaly
 ```
 
 ## Utilities
+
 Simple utility functions to check how good the decomposition is for your data:
 ```@docs
 rmse
