@@ -3,7 +3,7 @@ using SignalDecomposition, Test
 @testset "detrending" begin
     detrending_methods = [
         PolynomialDetrending(1), PolynomialDetrending(2), NoDecomposition(),
-        MovingAverageSmoothing(), LoessSmoothing(),
+        MovingAverageSmoothing(), LoessSmoothing(), HodrickPrescott(),
     ]
 
     N = 10000
