@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Examples · SignalDecomposition.jl</title><meta name="title" content="Examples · SignalDecomposition.jl"/><meta property="og:title" content="Examples · SignalDecomposition.jl"/><meta property="twitter:title" content="Examples · SignalDecomposition.jl"/><meta name="description" content="Documentation for SignalDecomposition.jl."/><meta property="og:description" content="Documentation for SignalDecomposition.jl."/><meta property="twitter:description" content="Documentation for SignalDecomposition.jl."/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="https://fonts.googleapis.com/css?family=Montserrat|Source+Code+Pro&amp;display=swap" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">SignalDecomposition.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Documentation</a></li><li class="is-active"><a class="tocitem" href>Examples</a><ul class="internal"><li><a class="tocitem" href="#Nonlinear"><span>Nonlinear</span></a></li><li><a class="tocitem" href="#TimeAnomaly-and-Sinusoidal"><span>TimeAnomaly and Sinusoidal</span></a></li><li><a class="tocitem" href="#Product"><span>Product</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Examples</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Examples</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/JuliaDynamics/SignalDecomposition.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/JuliaDynamics/SignalDecomposition.jl/blob/master/docs/src/examples.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h1><p>Only a few examples are shown here. Every method has an example (and plotting code) in the <code>test</code> folder!</p><h2 id="Nonlinear"><a class="docs-heading-anchor" href="#Nonlinear">Nonlinear</a><a id="Nonlinear-1"></a><a class="docs-heading-anchor-permalink" href="#Nonlinear" title="Permalink"></a></h2><pre><code class="language-julia hljs">using SignalDecomposition, PredefinedDynamicalSystems, Random, Statistics
+decompose = SignalDecomposition.decompose
+
+he = Systems.henon()
+tr, tvec = trajectory(he, 10000; Ttr = 100)
+Random.seed!(151521)
+z = tr[:, 1]
+s = z .+ randn(10001)*0.1*std(z)
+m = 5
+k = 30
+Q = [2, 2, 2, 3, 3, 3, 3]
+x, r = decompose(s, ManifoldProjection(m, Q, k))
+summary(x)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;10001-element Vector{Float64}&quot;</code></pre><p>This method is nicely highlighted once going into the state space and looking at the attractor:</p><pre><code class="language-julia hljs">using CairoMakie
+fig, ax = scatter(s[1:end-1], s[2:end]; markersize = 4, label = &quot;input&quot;)
+scatter!(ax, z[1:end-1], z[2:end], markersize = 4, label = &quot;real&quot;, color = :black)
+scatter!(ax, x[1:end-1], x[2:end], markersize = 3, label = &quot;output&quot;, alpha = 0.5, color = :red)
+axislegend(ax)
+fig</code></pre><img src="97a8bcbf.png" alt="Example block output"/><h2 id="TimeAnomaly-and-Sinusoidal"><a class="docs-heading-anchor" href="#TimeAnomaly-and-Sinusoidal">TimeAnomaly and Sinusoidal</a><a id="TimeAnomaly-and-Sinusoidal-1"></a><a class="docs-heading-anchor-permalink" href="#TimeAnomaly-and-Sinusoidal" title="Permalink"></a></h2><pre><code class="language-julia hljs">using SignalDecomposition, Dates, Random, CairoMakie
+
+Random.seed!(41516)
+y = Date(2001):Day(1):Date(2025)
+dy = dayofyear.(y)
+cy =  @. 4 + 7.2cos(2π*dy/365.26) + 5.6cos(4π*dy/365.26 + 3π/5)
+r0 = randn(length(dy))/2
+sy = cy .+ r0
+
+x, r = decompose(y, sy, TimeAnomaly())
+
+t = collect(1:length(y)) ./ 365.26 # true time in years
+
+x2, r2 = decompose(t, sy, Sinusoidal([1.0, 2.0]))
+
+fig, ax = lines(t, sy, label = &quot;input&quot;)
+lines!(ax, t, cy; label = &quot;true periodic&quot;, color = :black, linestyle = :dash)
+lines!(ax, t, x; label = &quot;TimeAnomaly&quot;, alpha = 1.0, color = :red)
+lines!(ax, t, x2; label = &quot;Sinusoidal&quot;, alpha = 0.5, color = (0.1, 0.8, 0.2))
+ax.xlabel = &quot;years&quot;
+axislegend(ax)
+xlims!(ax, 0, 1) # zoom in
+fig</code></pre><img src="bf391c49.png" alt="Example block output"/><p>Although not immediately obvious from the figure, <code>Sinusoidal</code> performs better:</p><pre><code class="language-julia hljs">rmse(cy, x), rmse(cy, x2)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(0.11986036248063099, 0.049787475009113534)</code></pre><p>Furthermore, by construction, the <code>x</code> component of <code>Sinusoidal</code> will always be a smooth function (sum of cosines). <code>TimeAnomaly</code> will typically retain some noise.</p><h2 id="Product"><a class="docs-heading-anchor" href="#Product">Product</a><a id="Product-1"></a><a class="docs-heading-anchor-permalink" href="#Product" title="Permalink"></a></h2><pre><code class="language-julia hljs">using SignalDecomposition, PredefinedDynamicalSystems, CairoMakie
+using Statistics: std
+
+ds = Systems.lorenz()
+tr, _ = trajectory(ds, 20; Δt = 0.002, Ttr = 100)
+lorenzx_slow = tr[:, 1]/std(tr[:, 1])
+
+ds = Systems.roessler()
+tr, _ = trajectory(ds, 500.0, Δt = 0.05, Ttr = 10)
+roesslerz = tr[:, 3]/std(tr[:, 3])
+roesslerz[roesslerz .≤ 0.1] .= 0
+
+s = lorenzx_slow .* roesslerz
+m = ProductInversion(roesslerz, 0.1:0.1:10)
+x, r = decompose(s, m)
+
+fig, ax = lines(s, label = &quot;input s&quot;)
+lines!(ax, x .* r, label = &quot;decomposed&quot;, linestyle = :dash)
+axislegend(ax)
+ax, = lines(fig[2,1], lorenzx_slow, label = &quot;original r&quot;)
+lines!(ax, x, label = &quot;decomposed r&quot;)
+axislegend(ax)
+fig</code></pre><img src="065735ba.png" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Documentation</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.14.1 on <span class="colophon-date" title="Friday 25 July 2025 13:32">Friday 25 July 2025</span>. Using Julia version 1.11.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
