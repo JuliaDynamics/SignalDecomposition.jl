@@ -1,3 +1,6 @@
+import DelayEmbeddings
+using Test, SignalDecomposition
+
 @testset "ExtremelySimpleNL" begin
 # input
 s1 = lorenzx + 0.1noise # input
@@ -10,7 +13,7 @@ w = 1 # theiler window
 
 for (name, s) in zip(("lorenz", "roessler"), (s1, s2))
 
-    τ = estimate_delay(s, "mi_min") #  5 # delaytime
+    τ = DelayEmbeddings.estimate_delay(s, "mi_min") #  5 # delaytime
     method = ExtremelySimpleNL(k, ℓ, τ, w, ε)
 
     x, r = decompose(s, method)
