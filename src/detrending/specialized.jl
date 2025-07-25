@@ -18,8 +18,8 @@ based on Peter Phillips and Zhentao Shi (2019): "Boosting the Hodrick-Prescott F
     iter::Int = 1
 end
 
-function decompose(t, x::AbstractVector, method::HodricPrescott)
-    (; λ, iter) = method.λ
+function decompose(t, x::AbstractVector, method::HodrickPrescott)
+    (; λ, iter) = method
     n = length(x)
     m = 2
     @assert n > m
@@ -43,15 +43,4 @@ function decompose(t, x::AbstractVector, method::HodricPrescott)
     trend = x - solve(S, x, iter)
     res = -solution
     return trend, res
-end
-
-# empirical orthogonal
-function detrend_emd(y)
-    n = length(y)
-    t = 1:n
-    imf = emd(y, t)
-    trend = imf[7] + imf[6]
-    residual = sum(imf[i] for i in 1:5)
-    detrend = y .- trend
-    return detrend
 end

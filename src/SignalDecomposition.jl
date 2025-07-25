@@ -34,6 +34,7 @@ include("nonlinear/projection.jl")
 include("misc/anomaly.jl")
 include("detrending/simple.jl")
 include("detrending/smoothing.jl")
+include("detrending/specialized.jl")
 
 
 

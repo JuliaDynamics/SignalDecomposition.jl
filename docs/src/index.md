@@ -7,7 +7,7 @@
 ## API
 
 ```@docs
-decompose
+SignalDecomposition.decompose
 ```
 
 Subtypes of `Decomposition` are listed in the rest of this page.
@@ -34,6 +34,7 @@ ManifoldProjection
 
 ```@docs
 PolynomialDetrending
+HodrickPrescott
 ```
 
 ## Smoothing (or detrending) methods
@@ -43,7 +44,6 @@ These methods can be either smoothing or detrending depending on your context!
 ```@docs
 MovingAverageSmoothing
 LoessSmoothing
-HodrickPrescott
 ```
 
 ## Product methods

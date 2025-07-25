@@ -1,6 +1,7 @@
 cd(@__DIR__)
 using SignalDecomposition
 using PredefinedDynamicalSystems
+decompose = SignalDecomposition.decompose
 
 pages = [
     "index.md",

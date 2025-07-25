@@ -33,3 +33,5 @@ include("lpv_test.jl")
 include("product_test.jl")
 include("nonlinear_test.jl")
 include("timeanomaly_test.jl")
+include("detrending_test.jl")
+
