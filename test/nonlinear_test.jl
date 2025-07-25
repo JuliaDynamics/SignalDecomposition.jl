@@ -32,7 +32,7 @@ end
 @testset "ManifoldProjection" begin
     @testset "Henon" begin
         he = Systems.henon()
-        tr = trajectory(he, 10000; Ttr = 100)
+        tr, _ = trajectory(he, 10000; Ttr = 100)
         Random.seed!(151521)
         z = tr[:, 1]
         s = z .+ randn(10001)*0.1*std(z)
@@ -63,7 +63,7 @@ end
 
     @testset "lorenz" begin
         lo = Systems.lorenz()
-        tr = trajectory(lo, 1000; Ttr = 100, dt = 0.1)
+        tr, _ = trajectory(lo, 1000; Ttr = 100, Δt = 0.1)
         Random.seed!(151521)
         z = tr[:, 1]
         s = z .+ randn(10001)*0.2*std(z)

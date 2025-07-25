@@ -4,8 +4,8 @@
 
 - Add new functionality for the package: detrending
 - Add new functionality for the package: smoothing
-- Add new `Decompositions`: `PolynomialDetrending, NoDecomposition, MovingAverageSmoothing`.
-- Package is now part of DynamicalSystems.jl as well.
+- Add new `Decompositions`: `PolynomialDetrending, NoDecomposition, MovingAverageSmoothing, LoessSmoothing, HodrickPrescott`.
+- Package is now part of DynamicalSystems.jl as well under the category "Nonlinear Timeseries Analysis".
 
 # v1.1
 

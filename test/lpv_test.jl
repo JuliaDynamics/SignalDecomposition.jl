@@ -37,7 +37,7 @@ end
     @test errres < 0.1
     errori = nrmse(s, x .+ r)
     @test errori < 1e-15
-    
+
     # figure()
     # ax1 = subplot(211)
     # plot(pu; alpha = 0.75, label = "x component")
