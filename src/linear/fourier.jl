@@ -8,6 +8,7 @@ export Fourier, FrequencySplit
 
 """
     Fourier([s, ] frequencies, x=true) <: Decomposition
+
 Decompose a timeseries `s` into a **sum** `x + r`, by identifying specific `frequencies`
 at the Fourier space and removing them from the signal.
 `x` is the removed periodic component while `r` is the residual.

@@ -1,3 +1,6 @@
+import DelayEmbeddings
+using Test, SignalDecomposition
+
 @testset "ExtremelySimpleNL" begin
 # input
 s1 = lorenzx + 0.1noise # input
@@ -10,7 +13,7 @@ w = 1 # theiler window
 
 for (name, s) in zip(("lorenz", "roessler"), (s1, s2))
 
-    τ = estimate_delay(s, "mi_min") #  5 # delaytime
+    τ = DelayEmbeddings.estimate_delay(s, "mi_min") #  5 # delaytime
     method = ExtremelySimpleNL(k, ℓ, τ, w, ε)
 
     x, r = decompose(s, method)
@@ -29,7 +32,7 @@ end
 @testset "ManifoldProjection" begin
     @testset "Henon" begin
         he = Systems.henon()
-        tr = trajectory(he, 10000; Ttr = 100)
+        tr, _ = trajectory(he, 10000; Ttr = 100)
         Random.seed!(151521)
         z = tr[:, 1]
         s = z .+ randn(10001)*0.1*std(z)
@@ -60,7 +63,7 @@ end
 
     @testset "lorenz" begin
         lo = Systems.lorenz()
-        tr = trajectory(lo, 1000; Ttr = 100, dt = 0.1)
+        tr, _ = trajectory(lo, 1000; Ttr = 100, Δt = 0.1)
         Random.seed!(151521)
         z = tr[:, 1]
         s = z .+ randn(10001)*0.2*std(z)

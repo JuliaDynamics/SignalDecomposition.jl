@@ -1,17 +1,17 @@
 cd(@__DIR__)
 using SignalDecomposition
 using DelimitedFiles, Test, Random, Statistics
-using DynamicalSystemsBase
+using PredefinedDynamicalSystems
 
 ds = Systems.lorenz()
-tr = trajectory(ds, 500.0; dt = 0.05, Ttr = 100)
+tr, tvec = trajectory(ds, 500.0; Δt = 0.05, Ttr = 100)
 lorenzx = tr[:, 1]/std(tr[:, 1])
 
-tr = trajectory(ds, 20; dt = 0.002, Ttr = 100)
+tr, tvec = trajectory(ds, 20; Δt = 0.002, Ttr = 100)
 lorenzx_slow = tr[:, 1]/std(tr[:, 1])
 
 ds = Systems.roessler()
-tr = trajectory(ds, 500.0, dt = 0.05, Ttr = 10)
+tr, tvec = trajectory(ds, 500.0, Δt = 0.05, Ttr = 10)
 roesslerz = tr[:, 3]/std(tr[:, 3])
 
 L = length(lorenzx)
@@ -33,3 +33,5 @@ include("lpv_test.jl")
 include("product_test.jl")
 include("nonlinear_test.jl")
 include("timeanomaly_test.jl")
+include("detrending_test.jl")
+

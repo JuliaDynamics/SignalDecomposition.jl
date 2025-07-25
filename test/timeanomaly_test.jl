@@ -1,3 +1,4 @@
+using SignalDecomposition, Test
 using Dates, Random
 
 @testset "TimeAnomaly" begin

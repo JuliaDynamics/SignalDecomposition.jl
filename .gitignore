@@ -9,6 +9,7 @@ videos
 plots
 notebooks
 _research
+docs/build_docs_with_style.jl
 
 ################################################################################
 #                                    Julia                                     #
